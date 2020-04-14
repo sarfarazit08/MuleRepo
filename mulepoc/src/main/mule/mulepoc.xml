@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="00cb4b61-2713-47db-8b30-d79a0fd4f0cc" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="a779a1c7-0333-412f-9c17-ac76f25adee3" >
+		<http:request-connection host="https://api.covid19india.org/data.json" />
+	</http:request-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="6d8f5171-c7b6-47ca-a0dc-f70d0058af3c" >
+		<file:connection workingDir="C:\Data\Sarfaraz\MuleESB\mulepoc\output" />
+	</file:config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="038ce5b6-16cb-4968-90d3-fd6d6dc859d6" >
+		<db:mssql-connection host="BT-2016-MalliK" user="asia-pac\md.sarfaraz-b" databaseName="MuleDB" >
+			<db:connection-properties >
+				<db:connection-property key="integratedSecurity" value="true" />
+			</db:connection-properties>
+		</db:mssql-connection>
+	</db:config>
+	<sub-flow name="StatesStatsDBInsertionFlow" doc:id="2efb8ebd-08cd-4b02-8e58-911f46aa7974" >
+		<ee:transform doc:name="AllStatesStats" doc:id="2ad61c96-035c-43f0-ae7b-deccf8c7be01">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload.statewise]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+		<scatter-gather doc:name="Scatter-Gather" doc:id="20954f5d-21ab-4256-89b5-9d8d6b3731b0" maxConcurrency="2">
+			<route >
+				<foreach doc:name="SplitStatewiseData2" doc:id="b6de89c4-5ded-48c6-b9df-599d0955bb88" collection="#[payload]">
+					<ee:transform doc:name="StatewiseData2Insert" doc:id="29d41692-fd7f-4e03-b0fa-bf87e4e8d313">
+						<ee:message>
+							<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	active: payload.active,
+	confirmed: payload.confirmed,
+	deaths: payload.deaths,
+	deltaconfirmed: payload.deltaconfirmed,
+	deltadeaths: payload.deltadeaths,
+	deltarecovered: payload.deltarecovered,
+	lastupdatedtime: payload.lastupdatedtime,
+	recovered: payload.recovered,
+	state: payload.state,
+	statecode: payload.statecode
+}]]></ee:set-payload>
+						</ee:message>
+					</ee:transform>
+					<db:insert doc:name="Insert" doc:id="cbf523ba-ae66-47e0-b3ef-a27b921a06a6" config-ref="Database_Config">
+					<db:sql>INSERT INTO dbo.covid19ss
+           (active
+           ,confirmed
+           ,deaths
+           ,recovered
+           ,deltaconfirmed
+           ,deltadeaths
+           ,deltarecovered
+           ,state
+           ,statecode
+           ,lastupdatedtime)
+     VALUES
+           (:active
+           ,:confirmed
+           ,:deaths
+           ,:recovered
+           ,:deltaconfirmed
+           ,:deltadeaths
+           ,:deltarecovered
+           ,:state
+           ,:statecode
+           ,:lastupdatedtime)</db:sql>
+					<db:input-parameters><![CDATA[#[{
+  "active": payload.active,
+  "confirmed": payload.confirmed,
+  "deaths": payload.deaths,
+  "deltaconfirmed": payload.deltaconfirmed,
+  "deltadeaths": payload.deltadeaths,
+  "deltarecovered": payload.deltarecovered,
+  "lastupdatedtime": payload.lastupdatedtime,
+  "recovered": payload.recovered,
+  "state": payload.state,
+  "statecode": payload.statecode
+}]]]></db:input-parameters>
+				</db:insert>
+				</foreach>
+				<db:select doc:name="SelectStateStats" doc:id="78b0fa45-b161-496b-9fa9-a42081457eb3" config-ref="Database_Config">
+					<db:sql >Select * from dbo.covid19ss as stateStatsFromDB FOR XML RAW ('statewisedata'), ROOT, ELEMENTS ;</db:sql>
+				</db:select>
+				<ee:transform doc:name="Transform Message" doc:id="d188bcd5-3d01-496a-8ede-187ea1334727" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	root: {
+		(payload.root.*statewisedata map ( statewisedatum , indexOfStatewisedatum ) -> {
+			statewisedata: {
+				active: statewisedatum.active,
+				confirmed: statewisedatum.confirmed,
+				deaths: statewisedatum.deaths,
+				recovered: statewisedatum.recovered,
+				deltaconfirmed: statewisedatum.deltaconfirmed,
+				deltadeaths: statewisedatum.deltadeaths,
+				deltarecovered: statewisedatum.deltarecovered,
+				state: statewisedatum.state,
+				statecode: statewisedatum.statecode,
+				lastupdatedtime: statewisedatum.lastupdatedtime
+			}
+		})
+	}
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<file:write doc:name="stateStatsfromDB" doc:id="01698c76-5459-412d-9141-2c45181fe291" config-ref="File_Config" path="#['C:\\Data\\Sarfaraz\\MuleESB\\mulepoc\\output\\Covid19TSData\\stateStatsfromDB.xml']" />
+			</route>
+			<route >
+				<ee:transform doc:name="Transform Message" doc:id="97fda086-c964-4db7-8e07-71d0876b81ce" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	root: {
+		(payload map ( payload01 , indexOfPayload01 ) -> {
+			statewisedata: {
+				active: payload01.active,
+				confirmed: payload01.confirmed,
+				deaths: payload01.deaths,
+				recovered: payload01.recovered,
+				deltaconfirmed: payload01.deltaconfirmed,
+				deltadeaths: payload01.deltadeaths,
+				deltarecovered: payload01.deltarecovered,
+				state: payload01.state,
+				statecode: payload01.statecode,
+				lastupdatedtime: payload01.lastupdatedtime
+			}
+		})
+	}
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<file:write doc:name="stateStatsfromReq" doc:id="73d85ced-df70-4c22-804a-69f2a96cdea2" config-ref="File_Config" path="#['C:\\Data\\Sarfaraz\\MuleESB\\mulepoc\\output\\Covid19TSData\\stateStatsfromReq.xml']" />
+			</route>
+		</scatter-gather>
+	</sub-flow>
+	<sub-flow name="TSData2CSVFlow" doc:id="b3fdaf33-e6fc-4076-849d-208ea44dd283" >
+		<ee:transform doc:name="GetCovid19TimeSeriesData" doc:id="1568762b-0792-46c2-8685-30b68946470c">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload.cases_time_series map ( casestimeseries , indexOfCasestimeseries ) -> {
+	dailyconfirmed: casestimeseries.dailyconfirmed,
+	dailydeceased: casestimeseries.dailydeceased,
+	dailyrecovered: casestimeseries.dailyrecovered,
+	date: casestimeseries.date,
+	totalconfirmed: casestimeseries.totalconfirmed,
+	totaldeceased: casestimeseries.totaldeceased,
+	totalrecovered: casestimeseries.totalrecovered
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+		<ee:transform doc:name="Json2CSV" doc:id="aac44ac6-e57e-447e-a975-d21a6503a3a6">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/csv headerLineNumber = 0 , header = true
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	dailyconfirmed: payload01.dailyconfirmed,
+	dailydeceased: payload01.dailydeceased,
+	dailyrecovered: payload01.dailyrecovered,
+	date: payload01.date,
+	totalconfirmed: payload01.totalconfirmed,
+	totaldeceased: payload01.totaldeceased,
+	totalrecovered: payload01.totalrecovered
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+		<file:write doc:name="tsCovid19data" doc:id="d555f580-e5db-45d2-8b7a-39fb6ceca217" config-ref="File_Config" path="#['C:\\Data\\Sarfaraz\\MuleESB\\mulepoc\\output\\Covid19TSData\\ts_covid19.csv']" />
+	</sub-flow>
+	<sub-flow name="StateStatsFlow" doc:id="e381619f-a5e0-4853-bb81-2397609d40bc" >
+		<ee:transform doc:name="GetAllStatesStats" doc:id="d5749ad1-eae6-48c8-9e27-42e4f181a3ce">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload.statewise]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<file:write doc:name="WriteStatesStatsInFile" doc:id="21ad78b0-128c-4a76-a611-55de3ef93d2f" config-ref="File_Config" path="#['C:\\Data\\Sarfaraz\\MuleESB\\mulepoc\\output\\Covid19StateData\\state_wise_' ++ now() as String {format: &quot;y-MM-dd-hh-m-s&quot;} ++ '.json']" />
+		<foreach doc:name="SplitStatewisData" doc:id="b9c8dea7-bd1d-4cb2-863a-ccbac2d6dc4d" collection="#[payload]">
+			<ee:transform doc:name="GetStatewiseData" doc:id="870ec71e-006e-4783-9966-a50a79f1f0ae">
+				<ee:message>
+					<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	active: payload.active,
+	confirmed: payload.confirmed,
+	deaths: payload.deaths,
+	deltaconfirmed: payload.deltaconfirmed,
+	deltadeaths: payload.deltadeaths,
+	deltarecovered: payload.deltarecovered,
+	lastupdatedtime: payload.lastupdatedtime,
+	recovered: payload.recovered,
+	state: payload.state,
+	statecode: payload.statecode
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<file:write doc:name="WriteStatewiseData" doc:id="822b2f85-a72d-4f97-8b0d-b9c9970e4a87" config-ref="File_Config" path="#['C:\\Data\\Sarfaraz\\MuleESB\\mulepoc\\output\\ST&amp;UTdata\\' ++ payload.state ++ '.json']" />
+		</foreach>
+	</sub-flow>
+	<flow name="mulepocFlow" doc:id="0fe6015e-37b6-43bd-b82b-6ee88d50b51b" >
+		<scheduler doc:name="Scheduler" doc:id="74bc3762-6cd9-4d37-84c6-41d14a287f68" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="1" timeUnit="HOURS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<logger level="INFO" doc:name="LogSchedulerRuntime" doc:id="2c555df3-1d0e-4843-a3f6-0e6b08305b5a" message="#[now() as String]"/>
+		<http:request method="GET" doc:name="GetCovid19Data" doc:id="5d34f234-413f-4ca3-bbe7-a21fb08e87ae" config-ref="HTTP_Request_configuration" url="https://api.covid19india.org/data.json"/>
+		<file:write doc:name="covid19data" doc:id="1197f211-e33a-4635-b9cc-4dff1a09d1f7" config-ref="File_Config" path="#['C:\\Data\\Sarfaraz\\MuleESB\\mulepoc\\output\\Covid19Data\\covid19.json']" />
+		<scatter-gather doc:name="Scatter-Gather" doc:id="298f9efb-1384-42a1-9232-095466cf19fe" maxConcurrency="3">
+			<route >
+				<flow-ref doc:name="StateStatsFlow" doc:id="b9c51921-83cb-4e35-a3b3-76ab104083dd" name="StateStatsFlow" />
+			</route>
+			<route>
+				<flow-ref doc:name="TSData2CSVFlow" doc:id="9e7c21e3-5017-46ff-b3dc-500ce60f5f68" name="TSData2CSVFlow" />
+			</route>
+			<route>
+				<flow-ref doc:name="StatesStatsDBInsertionFlow" doc:id="5d4c31ac-5c49-41d9-9d1d-4fd3365462c7" name="StatesStatsDBInsertionFlow" />
+			</route>
+		</scatter-gather>
+	</flow>
+</mule>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:jms="http://www.mulesoft.org/schema/mule/jms"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="8bb9dffe-82c4-4937-8295-58917101927f" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<jms:config name="JMS_Config" doc:name="JMS Config" doc:id="366339d8-0543-4658-a004-d72946030577" >
+		<jms:active-mq-connection username="admin" password="admin" >
+			<jms:factory-configuration brokerUrl="tcp://localhost:61616" />
+		</jms:active-mq-connection>
+	</jms:config>
+	<flow name="jmspocFlow" doc:id="8d9b6429-7fda-4057-a062-13dad78b2638" >
+		<http:listener doc:name="Listener" doc:id="c88b4207-3b50-44de-8243-4d89f70fd39c" config-ref="HTTP_Listener_config" path="/jms"/>
+		<logger level="INFO" doc:name="Logger" doc:id="946cd4d0-a21b-4e1d-ae0c-9674c45bafa9" message="#[payload]"/>
+		<jms:publish doc:name="Publish" doc:id="3888c8c7-45c1-4976-8b83-cf0e550936ab" config-ref="JMS_Config" destination="StudioIN"/>
+		<jms:consume doc:name="Consume" doc:id="131a228f-f888-4c52-aa73-42f8dc6e0a01" config-ref="JMS_Config" destination=" StudioIN" contentType="application/json">
+			<jms:consumer-type >
+				<jms:queue-consumer />
+			</jms:consumer-type>
+		</jms:consume>
+		<ee:transform doc:name="Transform Message" doc:id="fca666b1-f1c6-4714-af88-226f1069624a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	data: {
+		name: payload.name,
+		city: payload.city,
+		zipcode: payload.zipcode as Number
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="1757fa9c-d10a-4b02-b9b7-3edd430b3358" message="#[payload]" />
+	</flow>
+</mule>

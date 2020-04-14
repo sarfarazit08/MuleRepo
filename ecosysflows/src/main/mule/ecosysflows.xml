@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<file:config name="File_Config" doc:name="File Config" doc:id="69052f33-6a1f-439d-b2aa-33c9ff95e277" >
+		<file:connection workingDir="C:\Data\Sarfaraz\MuleESB\ecosysflows\ecosys" />
+	</file:config>
+	<flow name="ecosysflowsFlow" doc:id="a301d743-1168-4abb-ac25-f05f3936937e" >
+		<file:listener doc:name="On New or Updated File" doc:id="c5baf496-af16-4250-b1c5-cc0fd992b17f" config-ref="File_Config" directory="C:\Data\Sarfaraz\MuleESB\ecosysflows\ecosys\COMHDR" moveToDirectory="C:\Data\Sarfaraz\MuleESB\ecosysflows\ecosys\ARCHIVE">
+			<scheduling-strategy >
+				<fixed-frequency frequency="10" timeUnit="SECONDS" />
+			</scheduling-strategy>
+		</file:listener>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="ed04820a-07ae-4a5b-b9b2-53ae1ff0205a" />
+	</flow>
+</mule>

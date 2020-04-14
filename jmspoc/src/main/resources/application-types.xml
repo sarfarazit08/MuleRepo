@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="jsonFormat" format="json">
+      <types:shape format="weave" example="examples/file.json"><![CDATA[%dw 2.0
+
+type jsonFormat = {|
+  name: String, 
+  city: String, 
+  zipcode: String
+|} {"example": "{\\\"name\\\":\\\"sarfaraz\\\",\\\"city\\\":\\\"Kolkata\\\",\\\"zipcode\\\":\\\"700058\\\"}"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="xmlFormat" format="xml">
+      <types:example format="xml" element="data" location="examples/file.xml"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#fca666b1-f1c6-4714-af88-226f1069624a">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="jsonFormat"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="xmlFormat"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

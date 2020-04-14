@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:xml-module="http://www.mulesoft.org/schema/mule/xml-module" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/xml-module http://www.mulesoft.org/schema/mule/xml-module/current/mule-xml-module.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="64f26beb-99fc-4189-b8e1-83262e50adff" >
+		<db:mssql-connection host="localhost" user="asia-pac\md.sarfaraz-b" databaseName="MuleDB" >
+			<db:connection-properties >
+				<db:connection-property key="integratedSecurity" value="true" />
+			</db:connection-properties>
+		</db:mssql-connection>
+	</db:config>
+	<xml-module:config name="XML_Config" doc:name="XML Config" doc:id="47259c65-3239-4df3-ab3f-ff808f72ad6c" />
+	<file:config name="File_Config" doc:name="File Config" doc:id="c14f7bc1-f59b-493b-9462-d59ef7c4e5cd" >
+		<file:connection workingDir="C:\Data\Sarfaraz\MuleESB\canonicalpoc\input" />
+	</file:config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="4507e169-d2fe-4326-9088-8d841c2975d9" />
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="7c4ace81-d6af-41a2-a1c0-0c7a6b719571" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="canonicalpocFlowCsv" doc:id="91288dcd-df7b-4d4a-9215-12df12bd87ee" >
+		<file:listener doc:name="On New or Updated File" doc:id="62f4bb61-c71e-418c-8c3b-2dd676ccf65d" config-ref="File_Config" directory="C:\Data\Sarfaraz\MuleESB\canonicalpoc\input\csv" moveToDirectory="C:\Data\Sarfaraz\MuleESB\canonicalpoc\input">
+			<scheduling-strategy >
+				<fixed-frequency />
+			</scheduling-strategy>
+		</file:listener>
+		<ee:transform doc:name="Transform Message" doc:id="2e0291b5-2311-41ac-9278-699f045d9f5f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	root: {
+		(payload map ( payload01 , indexOfPayload01 ) -> {
+			statewisedata: {
+				active: payload01.active,
+				confirmed: payload01.confirmed,
+				deaths: payload01.deaths,
+				recovered: payload01.recovered,
+				deltaconfirmed: payload01.deltaconfirmed,
+				deltadeaths: payload01.deltadeaths,
+				deltarecovered: payload01.deltarecovered,
+				state: payload01.state,
+				statecode: payload01.statecode,
+				lastupdatedtime: payload01.lastupdatedtime
+			}
+		})
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="042423e9-0e1c-4306-8c66-dd26c8c7559c" message="csvflow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="7fcce137-427f-4ce0-9156-9c9d5aab220e" name="canonicalpocFlow"/>
+	</flow>
+	<flow name="canonicalpocFlowJson" doc:id="fc10e1ba-b23a-4448-9726-f2e80af55e2f" >
+		<http:listener doc:name="Listener" doc:id="32f503a2-8629-4ab2-9432-4d8aab6d895e" config-ref="HTTP_Listener_config" path="/cpocjson">
+			<http:response >
+				<http:body ><![CDATA[data inserted]]></http:body>
+			</http:response>
+		</http:listener>
+		<ee:transform doc:name="Transform Message" doc:id="ec22e355-eb4f-4cc6-a50a-5cf59cf0c011" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	root: {
+		(payload map ( payload01 , indexOfPayload01 ) -> {
+			statewisedata: {
+				active: payload01.active,
+				confirmed: payload01.confirmed,
+				deaths: payload01.deaths,
+				recovered: payload01.recovered,
+				deltaconfirmed: payload01.deltaconfirmed,
+				deltadeaths: payload01.deltadeaths,
+				deltarecovered: payload01.deltarecovered,
+				state: payload01.state,
+				statecode: payload01.statecode,
+				lastupdatedtime: payload01.lastupdatedtime
+			}
+		})
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="8b666326-ffd8-4af7-999f-af00c1a31fdc" message="jsonflow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="2b78795a-a7be-45a0-ab48-85a265c7387f" name="canonicalpocFlow"/>
+	</flow>
+	<flow name="canonicalpocFlowXml" doc:id="d3f81dc0-314a-43b6-9b10-b1bce437bfc5">
+		<file:listener doc:name="On New or Updated File" doc:id="442f6ff0-6902-4eb7-9ad4-e98c75f57db6" config-ref="File_Config" directory="C:\Data\Sarfaraz\MuleESB\canonicalpoc\input\xml" moveToDirectory="C:\Data\Sarfaraz\MuleESB\canonicalpoc\input">
+			<scheduling-strategy>
+				<fixed-frequency />
+			</scheduling-strategy>
+		</file:listener>
+		<ee:transform doc:name="Transform Message" doc:id="3886b406-8796-41b4-86fd-028b43e9a9e7">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	root: {
+		(payload.root.*statewisedata map ( statewisedatum , indexOfStatewisedatum ) -> {
+			statewisedata: {
+				active: statewisedatum.active,
+				confirmed: statewisedatum.confirmed,
+				deaths: statewisedatum.deaths,
+				recovered: statewisedatum.recovered,
+				deltaconfirmed: statewisedatum.deltaconfirmed,
+				deltadeaths: statewisedatum.deltadeaths,
+				deltarecovered: statewisedatum.deltarecovered,
+				state: statewisedatum.state,
+				statecode: statewisedatum.statecode,
+				lastupdatedtime: statewisedatum.lastupdatedtime
+			}
+		})
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="2c8eb195-bcf8-499c-b9fa-c6a71449d1ad" message="xmlflow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="b4030393-2145-4148-a9be-db2bf908693c" name="canonicalpocFlow"/>
+	</flow>
+	<flow name="canonicalpocFlow" doc:id="a5b58b8f-97ff-4f35-9f81-b9e944d98b0c">
+		<ee:transform doc:name="Transform Message" doc:id="74dfcc01-5917-45ff-8e7c-7ccd8afb7c0f" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload.root.*statewisedata map ( statewisedatum , indexOfStatewisedatum ) -> {
+	active: statewisedatum.active default "",
+	confirmed: statewisedatum.confirmed default "",
+	deaths: statewisedatum.deaths default "",
+	deltaconfirmed: statewisedatum.deltaconfirmed default "",
+	deltadeaths: statewisedatum.deltadeaths default "",
+	deltarecovered: statewisedatum.deltarecovered default "",
+	lastupdatedtime: statewisedatum.lastupdatedtime default "",
+	recovered: statewisedatum.recovered default "",
+	state: statewisedatum.state default "",
+	statecode: statewisedatum.statecode default ""
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<db:bulk-insert doc:name="Bulk insert" doc:id="d36d0200-e750-4a04-98fb-7069c5da314b" config-ref="Database_Config">
+			<db:bulk-input-parameters ><![CDATA[#[output application/java
+---
+payload]]]></db:bulk-input-parameters>
+			<db:sql >insert into dbo.covid19ss values(:active,:confirmed,:deaths,:recovered,:deltaconfirmed,:deltadeaths,:deltarecovered,:state,:statecode,:lastupdatedtime)</db:sql>
+		</db:bulk-insert>
+	</flow>
+</mule>

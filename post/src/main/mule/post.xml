@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d8030b95-302f-4662-a155-a26ba179406b" >
+		<http:listener-connection host="0.0.0.0" port="8080" />
+	</http:listener-config>
+	<flow name="postFlow" doc:id="d6d44706-b786-43b6-a7d7-3c04582562ae" >
+		<http:listener doc:name="Listener" doc:id="17330273-3cef-4b2b-a8aa-2eac304decc5" config-ref="HTTP_Listener_config" path="/data">
+		</http:listener>
+		<set-payload value="#[payload ++ {&quot;city&quot; : &quot;kolkata&quot;} ++ {&quot;lasttimeupdated&quot;: now() as String {format: 'y-MM-dd-hh:mm:ss'}}]" doc:name="Set Payload" doc:id="b17c3e4b-33bd-427a-b473-dcb475034b1a" />
+		<logger level="INFO" doc:name="Logger" doc:id="a30c6afc-1636-4c5d-84b3-82089a55d999" message="#[payload]" />
+	</flow>
+</mule>

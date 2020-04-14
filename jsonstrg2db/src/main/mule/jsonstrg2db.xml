@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="ca02ed73-995f-4876-a62b-79551dac85a5" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="06e414a0-b94c-4150-a3a9-ede0e9821f6e" >
+		<db:mssql-connection host="localhost" user="asia-pac\md.sarfaraz-b" databaseName="MuleDB" >
+			<db:connection-properties >
+				<db:connection-property key="integratedSecurity" value="true" />
+			</db:connection-properties>
+		</db:mssql-connection>
+	</db:config>
+	<flow name="jsonStrg2dbFlow" doc:id="e7c37bbd-46e1-4573-83a6-c2532fecf969" >
+		<http:listener doc:name="Listener" doc:id="1d32b808-40a6-43cd-8537-d76a0f82560c" config-ref="HTTP_Listener_config" path="/jsonstrg2db"/>
+		<ee:transform doc:name="Transform Message" doc:id="21a7882c-046f-4478-a7d2-f79ec2b9df7c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	result : write(payload, 'application/json') as String
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<db:insert doc:name="Insert" doc:id="8aa10dda-cf3b-44d6-8fc4-d81d48ee6e99" config-ref="Database_Config">
+			<db:sql >INSERT INTO JSON VALUES(:data)</db:sql>
+			<db:input-parameters ><![CDATA[#[{"data": payload.result}]]]></db:input-parameters>
+		</db:insert>
+		<set-payload value="json data inserted" doc:name="Set Payload" doc:id="6d7c8468-ab9c-4f6a-b222-fe7d26af6485" />
+	</flow>
+	<flow name="xmlStrg2dbFlow" doc:id="6d1f6fe1-bab9-496f-8a1b-ced979e809fb" >
+		<http:listener doc:name="Listener" doc:id="9e3f1a3c-ee42-42d5-a894-466098d60dc4" config-ref="HTTP_Listener_config" path="/xml2db"/>
+		<ee:transform doc:name="Transform Message" doc:id="21118966-032b-4aae-8259-12fcb3777d5e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	result : write(payload, 'application/xml') as String
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<db:insert doc:name="Insert" doc:id="4397210f-d702-4497-a101-eddc015a608c" config-ref="Database_Config">
+			<db:sql >INSERT INTO JSON VALUES(:data)</db:sql>
+			<db:input-parameters ><![CDATA[#[{"data": payload.result}]]]></db:input-parameters>
+		</db:insert>
+		<set-payload value="xml data inserted" doc:name="Set Payload" doc:id="b8b4f2fc-f57d-4ceb-8f57-208c06c5ccc0" />
+	</flow>
+</mule>

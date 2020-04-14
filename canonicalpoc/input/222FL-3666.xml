@@ -1,0 +1,72 @@
+<ns0:SITE xmlns:ns0="http://sww.shell.com/xsd/Shell/DS1/SRC/GSAPSiteData/April/2008">
+  <INFO>
+    <SID>3666</SID>
+    <FN>EODSales_3666_20200306T053933_20200306.txt</FN>
+    <PD>20200306</PD>
+    <PT>053933</PT>
+  </INFO>
+  <ROUT>
+    <CNTRY>AT</CNTRY>
+    <FT />
+    <DEST>Aggregate</DEST>
+    <GRP>1</GRP>
+    <IDOCTYP>SBC-I-222</IDOCTYP>
+    <SITETYP />
+  </ROUT>
+  <TRACK>
+  </TRACK>
+  <BODY>
+    <TXNS>
+      <FSORD ID="1" MANDT="110" IDOCTYP="/DS1/SD_C_POS_SO01" MESTYP="/DS1/SD_C_POS" SNDPOR="A000000003" SNDPRT="LS" SNDPRN="CAPQAPOSAT" RCVPOR="SAPP94" RCVPRT="LS" RCVPRN="P94PDR3110">
+        <RECORDS>
+          <FSORDH ID="2" CHKDATE="False" CHKFMT="False">
+            <TDATE>20200306</TDATE>
+            <TTIME>053933</TTIME>
+            <FFDATA />
+            <SHIPTO>10022762</SHIPTO>
+            <SEGNAM>/DS1/SD_C_ITEMPOS000</SEGNAM>
+            <FL_TYP>ATR222FL</FL_TYP>
+            <PD_CLS>02</PD_CLS>
+            <VKORG>AT01</VKORG>
+            <VTWEG>14</VTWEG>
+            <WAERK>EUR</WAERK>
+          </FSORDH>
+          <FSORDD ID="3">
+            <SNO>1</SNO>
+            <FPCD>033</FPCD>
+            <SALQTY>11.750</SALQTY>
+            <SALVAL>14.980</SALVAL>
+            <CCODE />
+            <SAPMN>400002384</SAPMN>
+          </FSORDD>
+          <FSORDD ID="4">
+            <SNO>2</SNO>
+            <FPCD>022</FPCD>
+            <SALQTY>1.200</SALQTY>
+            <SALVAL>1.340</SALVAL>
+            <CCODE />
+            <SAPMN>400002484</SAPMN>
+          </FSORDD>
+          <FSORDD ID="5">
+            <SNO>3</SNO>
+            <FPCD>023</FPCD>
+            <SALQTY>2.480</SALQTY>
+            <SALVAL>3.250</SALVAL>
+            <CCODE />
+            <SAPMN>400002486</SAPMN>
+          </FSORDD>
+          <FSORDT>
+            <CHKSUM>3666,FSORD,20200306,17.840,22.250</CHKSUM>
+            <DUPC>False</DUPC>
+          </FSORDT>
+        </RECORDS>
+      </FSORD>
+    </TXNS>
+  </BODY>
+  <SUSP>
+    <RSN>Validation Succeeded</RSN>
+    <FRMSUS>false</FRMSUS>
+    <IBSQL>False</IBSQL>
+    <ERRS />
+  </SUSP>
+</ns0:SITE>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:wsc="http://www.mulesoft.org/schema/mule/wsc"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/wsc http://www.mulesoft.org/schema/mule/wsc/current/mule-wsc.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9d6c2826-173d-43d0-82e3-579f521bbc84" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<wsc:config name="Web_Service_Consumer_Config" doc:name="Web Service Consumer Config" doc:id="83a87177-292a-42cd-ab28-004d7c03ae8d" >
+		<wsc:connection wsdlLocation="http://10.201.210.126/Shell.BizTalk.DS1.SCM.GSAP.SCMI011.OASToGSAP.Orchestrations_Proxy/Shell_BizTalk_DS1_SCM_GSAP_SCMI011_OASToGSAP_Orchestrations_processSCMI011OASToGSAP_ReqRespRefinaryPort.asmx?wsdl" service="SCMI011" port="SCMI011Port" address="http://10.201.210.126/Shell.BizTalk.DS1.SCM.GSAP.SCMI011.OASToGSAP.Orchestrations_Proxy/Shell_BizTalk_DS1_SCM_GSAP_SCMI011_OASToGSAP_Orchestrations_processSCMI011OASToGSAP_ReqRespRefinaryPort.asmx" >
+			<wsc:web-service-security actor="http://schemas.xmlsoap.org/soap/actor/next" />
+		</wsc:connection>
+	</wsc:config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="d74ebbe4-f9ed-4176-a6f5-e345c50d9adc" >
+		<file:connection workingDir="C:\Data\Sarfaraz\MuleESB\scmi011\input" />
+	</file:config>
+	<flow name="scmi011Flow" doc:id="2b48eb58-bd08-4e79-96e5-53c9f3809b72" >
+		<http:listener doc:name="Listener" doc:id="6afe002e-a7a2-4568-8a9d-3588224eff43" config-ref="HTTP_Listener_config" path="/SCMI011"/>
+		<file:read doc:name="Read" doc:id="01bfaa20-34a0-4cc3-b9ec-f216a28a7e61" config-ref="File_Config" path="C:\Data\Sarfaraz\MuleESB\scmi011\input\SCMI011_P.xml"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="422af15a-d228-4a62-87ac-bde7f5987f47" />
+		<wsc:consume operation="ReqRespRefinery_Operation" doc:name="Consume" doc:id="e60f06ff-38cf-4347-9338-6e1bafad8deb" config-ref="Web_Service_Consumer_Config"/>
+	</flow>
+</mule>

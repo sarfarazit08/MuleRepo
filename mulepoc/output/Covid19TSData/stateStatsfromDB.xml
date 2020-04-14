@@ -1,0 +1,386 @@
+<root>
+	<statewisedata>
+		<active>281</active>
+		<confirmed>305</confirmed>
+		<deaths>3</deaths>
+		<recovered>21</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Uttar Pradesh</state>
+		<statecode>UP</statecode>
+		<lastupdatedtime>06/04/2020 17:36:28</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>298</active>
+		<confirmed>325</confirmed>
+		<deaths>2</deaths>
+		<recovered>25</recovered>
+		<deltaconfirmed>24</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Rajasthan</state>
+		<statecode>RJ</statecode>
+		<lastupdatedtime>07/04/2020 11:04:28</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>296</active>
+		<confirmed>304</confirmed>
+		<deaths>3</deaths>
+		<recovered>5</recovered>
+		<deltaconfirmed>1</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Andhra Pradesh</state>
+		<statecode>AP</statecode>
+		<lastupdatedtime>07/04/2020 11:54:39</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>239</active>
+		<confirmed>268</confirmed>
+		<deaths>18</deaths>
+		<recovered>11</recovered>
+		<deltaconfirmed>12</deltaconfirmed>
+		<deltadeaths>3</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Madhya Pradesh</state>
+		<statecode>MP</statecode>
+		<lastupdatedtime>07/04/2020 13:04:35</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>151</active>
+		<confirmed>175</confirmed>
+		<deaths>4</deaths>
+		<recovered>20</recovered>
+		<deltaconfirmed>12</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Karnataka</state>
+		<statecode>KA</statecode>
+		<lastupdatedtime>07/04/2020 13:35:25</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>130</active>
+		<confirmed>165</confirmed>
+		<deaths>12</deaths>
+		<recovered>23</recovered>
+		<deltaconfirmed>19</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>1</deltarecovered>
+		<state>Gujarat</state>
+		<statecode>GJ</statecode>
+		<lastupdatedtime>07/04/2020 12:14:25</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>103</active>
+		<confirmed>109</confirmed>
+		<deaths>2</deaths>
+		<recovered>4</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Jammu and Kashmir</state>
+		<statecode>JK</statecode>
+		<lastupdatedtime>06/04/2020 17:36:34</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>102</active>
+		<confirmed>133</confirmed>
+		<deaths>2</deaths>
+		<recovered>29</recovered>
+		<deltaconfirmed>23</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Haryana</state>
+		<statecode>HR</statecode>
+		<lastupdatedtime>07/04/2020 13:44:57</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>79</active>
+		<confirmed>90</confirmed>
+		<deaths>7</deaths>
+		<recovered>4</recovered>
+		<deltaconfirmed>11</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Punjab</state>
+		<statecode>PB</statecode>
+		<lastupdatedtime>07/04/2020 14:04:31</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>75</active>
+		<confirmed>91</confirmed>
+		<deaths>3</deaths>
+		<recovered>13</recovered>
+		<deltaconfirmed>11</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>3</deltarecovered>
+		<state>West Bengal</state>
+		<statecode>WB</statecode>
+		<lastupdatedtime>07/04/2020 13:35:28</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>22</active>
+		<confirmed>32</confirmed>
+		<deaths>1</deaths>
+		<recovered>9</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Bihar</state>
+		<statecode>BR</statecode>
+		<lastupdatedtime>06/04/2020 22:45:39</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>27</active>
+		<confirmed>27</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>1</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Assam</state>
+		<statecode>AS</statecode>
+		<lastupdatedtime>07/04/2020 11:04:34</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>27</active>
+		<confirmed>31</confirmed>
+		<deaths>0</deaths>
+		<recovered>4</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Uttarakhand</state>
+		<statecode>UT</statecode>
+		<lastupdatedtime>06/04/2020 18:44:26</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>39</active>
+		<confirmed>42</confirmed>
+		<deaths>1</deaths>
+		<recovered>2</recovered>
+		<deltaconfirmed>2</deltaconfirmed>
+		<deltadeaths>1</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Odisha</state>
+		<statecode>OR</statecode>
+		<lastupdatedtime>07/04/2020 14:35:26</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>13</active>
+		<confirmed>18</confirmed>
+		<deaths>0</deaths>
+		<recovered>5</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Chandigarh</state>
+		<statecode>CH</statecode>
+		<lastupdatedtime>05/04/2020 21:41:44</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>4</active>
+		<confirmed>14</confirmed>
+		<deaths>0</deaths>
+		<recovered>10</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Ladakh</state>
+		<statecode>LA</statecode>
+		<lastupdatedtime>06/04/2020 23:56:56</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>10</active>
+		<confirmed>10</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Andaman and Nicobar Islands</state>
+		<statecode>AN</statecode>
+		<lastupdatedtime>30/03/2020 11:27:27</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>2</active>
+		<confirmed>10</confirmed>
+		<deaths>0</deaths>
+		<recovered>8</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Chhattisgarh</state>
+		<statecode>CT</statecode>
+		<lastupdatedtime>05/04/2020 20:31:27</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>7</active>
+		<confirmed>7</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Goa</state>
+		<statecode>GA</statecode>
+		<lastupdatedtime>04/04/2020 09:42:27</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>15</active>
+		<confirmed>18</confirmed>
+		<deaths>2</deaths>
+		<recovered>1</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Himachal Pradesh</state>
+		<statecode>HP</statecode>
+		<lastupdatedtime>06/04/2020 23:04:27</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>4</active>
+		<confirmed>5</confirmed>
+		<deaths>0</deaths>
+		<recovered>1</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>1</deltarecovered>
+		<state>Puducherry</state>
+		<statecode>PY</statecode>
+		<lastupdatedtime>07/04/2020 17:23:30</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>4</active>
+		<confirmed>4</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Jharkhand</state>
+		<statecode>JH</statecode>
+		<lastupdatedtime>06/04/2020 10:03:28</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>1</active>
+		<confirmed>2</confirmed>
+		<deaths>0</deaths>
+		<recovered>1</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Manipur</state>
+		<statecode>MN</statecode>
+		<lastupdatedtime>06/04/2020 22:35:54</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>1</active>
+		<confirmed>1</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Mizoram</state>
+		<statecode>MZ</statecode>
+		<lastupdatedtime>26/03/2020 07:19:29</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>1</active>
+		<confirmed>1</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Arunachal Pradesh</state>
+		<statecode>AR</statecode>
+		<lastupdatedtime>02/04/2020 11:42:31</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>1</active>
+		<confirmed>1</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Dadra and Nagar Haveli</state>
+		<statecode>DN</statecode>
+		<lastupdatedtime>06/04/2020 15:22:25</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>0</active>
+		<confirmed>0</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Daman and Diu</state>
+		<statecode>DD</statecode>
+		<lastupdatedtime>26/03/2020 07:19:29</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>0</active>
+		<confirmed>0</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Lakshadweep</state>
+		<statecode>LD</statecode>
+		<lastupdatedtime>26/03/2020 07:19:29</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>0</active>
+		<confirmed>0</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Meghalaya</state>
+		<statecode>ML</statecode>
+		<lastupdatedtime>26/03/2020 07:19:29</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>0</active>
+		<confirmed>0</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Nagaland</state>
+		<statecode>NL</statecode>
+		<lastupdatedtime>26/03/2020 07:19:29</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>0</active>
+		<confirmed>0</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Sikkim</state>
+		<statecode>SK</statecode>
+		<lastupdatedtime>26/03/2020 07:19:29</lastupdatedtime>
+	</statewisedata>
+	<statewisedata>
+		<active>1</active>
+		<confirmed>1</confirmed>
+		<deaths>0</deaths>
+		<recovered>0</recovered>
+		<deltaconfirmed>0</deltaconfirmed>
+		<deltadeaths>0</deltadeaths>
+		<deltarecovered>0</deltarecovered>
+		<state>Tripura</state>
+		<statecode>TR</statecode>
+		<lastupdatedtime>06/04/2020 22:14:41</lastupdatedtime>
+	</statewisedata>
+</root>

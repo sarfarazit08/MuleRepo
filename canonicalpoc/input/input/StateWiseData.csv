@@ -1,0 +1,33 @@
+﻿active,confirmed,deaths,recovered,deltaconfirmed,deltadeaths,deltarecovered,state,statecode,lastupdatedtime
+10,10,0,0,0,0,0,Andaman and Nicobar Islands,AN,30-03-20 11:27
+296,304,3,5,1,0,0,Andhra Pradesh,AP,07-04-20 11:54
+1,1,0,0,0,0,0,Arunachal Pradesh,AR,02-04-20 11:42
+27,27,0,0,1,0,0,Assam,AS,07-04-20 11:04
+22,32,1,9,0,0,0,Bihar,BR,06-04-20 22:45
+13,18,0,5,0,0,0,Chandigarh,CH,05-04-20 21:41
+2,10,0,8,0,0,0,Chhattisgarh,CT,05-04-20 20:31
+1,1,0,0,0,0,0,Dadra and Nagar Haveli,DN,06-04-20 15:22
+0,0,0,0,0,0,0,Daman and Diu,DD,26-03-20 7:19
+7,7,0,0,0,0,0,Goa,GA,04-04-20 9:42
+130,165,12,23,19,0,1,Gujarat,GJ,07-04-20 12:14
+102,133,2,29,23,0,0,Haryana,HR,07-04-20 13:44
+15,18,2,1,0,0,0,Himachal Pradesh,HP,06-04-20 23:04
+103,109,2,4,0,0,0,Jammu and Kashmir,JK,06-04-20 17:36
+4,4,0,0,0,0,0,Jharkhand,JH,06-04-20 10:03
+151,175,4,20,12,0,0,Karnataka,KA,07-04-20 13:35
+4,14,0,10,0,0,0,Ladakh,LA,06-04-20 23:56
+0,0,0,0,0,0,0,Lakshadweep,LD,26-03-20 7:19
+239,268,18,11,12,3,0,Madhya Pradesh,MP,07-04-20 13:04
+1,2,0,1,0,0,0,Manipur,MN,06-04-20 22:35
+0,0,0,0,0,0,0,Meghalaya,ML,26-03-20 7:19
+1,1,0,0,0,0,0,Mizoram,MZ,26-03-20 7:19
+0,0,0,0,0,0,0,Nagaland,NL,26-03-20 7:19
+39,42,1,2,2,1,0,Odisha,OR,07-04-20 14:35
+4,5,0,1,0,0,1,Puducherry,PY,07-04-20 17:23
+79,90,7,4,11,0,0,Punjab,PB,07-04-20 14:04
+298,325,2,25,24,0,0,Rajasthan,RJ,07-04-20 11:04
+0,0,0,0,0,0,0,Sikkim,SK,26-03-20 7:19
+1,1,0,0,0,0,0,Tripura,TR,06-04-20 22:14
+281,305,3,21,0,0,0,Uttar Pradesh,UP,06-04-20 17:36
+27,31,0,4,0,0,0,Uttarakhand,UT,06-04-20 18:44
+75,91,3,13,11,0,3,West Bengal,WB,07-04-20 13:35
